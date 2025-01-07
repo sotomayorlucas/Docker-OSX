@@ -32,6 +32,7 @@ empty disk image'''
 
 # Bad hack
 import warnings
+import defusedxml.minidom
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
@@ -40,8 +41,6 @@ import gzip
 import argparse
 import plistlib
 import subprocess
-
-from xml.dom import minidom
 from xml.parsers.expat import ExpatError
 
 
@@ -185,7 +184,7 @@ def parse_dist(filename):
     interest'''
     dist_info = {}
     try:
-        dom = minidom.parse(filename)
+        dom = defusedxml.minidom.parse(filename)
     except ExpatError:
         print('Invalid XML in %s' % filename, file=sys.stderr)
         return dist_info
