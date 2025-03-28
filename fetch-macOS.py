@@ -32,6 +32,7 @@ empty disk image'''
 
 # Bad hack
 import warnings
+from security import safe_command
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
@@ -87,7 +88,7 @@ class ReplicationError(Exception):
 
 
 def cmd_exists(cmd):
-    return subprocess.Popen("type " + cmd, shell=True,
+    return safe_command.run(subprocess.Popen, "type " + cmd, shell=True,
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
